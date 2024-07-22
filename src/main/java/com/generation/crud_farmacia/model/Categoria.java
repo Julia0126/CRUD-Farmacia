@@ -1,9 +1,16 @@
 package com.generation.crud_farmacia.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +31,10 @@ public class Categoria {
 	@NotNull(message = "O atributo descrição é obrigatório")
 	@Size(min = 3, max = 100, message = "O atributo descrição deve conter no mínimo 3 e no máximo 100 caracteres")
 	private String descricao;
+	
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("categoria")
+    private List<Produto> produtos;
 
 	public Long getId() {
 		return id;
